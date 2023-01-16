@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:3000/api
     description: local server
-  - url: https://entertainment-web-u5fj.onrender.com/#/films/get_films
+  - url: https://entertainment-web-u5fj.onrender.com/api
     description: render server
 paths:
   /films:
