@@ -26,7 +26,7 @@ paths:
   /auth/signup:
     post:
       tags:
-        - Auth
+        - Authorisation
       requestBody:
         description: create new user
         required: true
@@ -63,3 +63,22 @@ paths:
                 avatar:
                   type: string
                   format: binary
+  /user/login:
+    post:
+      tags:
+        - Login
+      requestBody:
+        description: user authorization
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: login successfully

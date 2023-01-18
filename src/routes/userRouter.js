@@ -1,5 +1,9 @@
 import express from "express";
-import { getUser, signUpUser } from "../controllers/userController.js";
+import {
+  getUser,
+  loginUser,
+  signUpUser,
+} from "../controllers/userController.js";
 import multer from "multer";
 
 const userRouter = express.Router();
@@ -30,6 +34,8 @@ userRouter.post(
   multer({ storage: fileStorage, fileFilter }).single("avatar"),
   signUpUser
 );
+
+userRouter.post("/user/login", loginUser);
 
 userRouter.get("/users", getUser);
 
