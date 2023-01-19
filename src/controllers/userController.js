@@ -1,5 +1,6 @@
 import User from "../model/userModel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const signUpUser = async (req, res) => {
   const { email, password } = req.body;
@@ -12,7 +13,7 @@ export const signUpUser = async (req, res) => {
   const exist = await User.findOne({ email });
   if (exist) {
     return res
-      .status(400)
+      .status(409)
       .json({ error: "An account with this email already exists" });
   }
 
@@ -39,14 +40,19 @@ export const loginUser = async (req, res) => {
 
   const existingUser = await User.findOne({ email });
   if (!existingUser) {
-    return res.status(400).json({ error: "Wrong email or password" });
+    return res.status(401).json({ error: "Wrong email or password" });
   }
 
   const isValidPassword = await bcrypt.compare(password, existingUser.password);
   if (!isValidPassword) {
-    return res.status(400).json({ error: "Wrong email or password" });
+    return res.status(401).json({ error: "Wrong email or password" });
   } else {
-    return res.status(201).json({ message: "Login sucessfully" });
+    const token = jwt.sign(
+      { id: existingUser._id, email: existingUser.email },
+      process.env.MONGO_SECRET
+    );
+
+    return res.status(201).json({ message: "Login successfully", token });
   }
 };
 
