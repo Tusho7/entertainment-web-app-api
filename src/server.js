@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import connectToMongo from "./config/mongo.js";
 import filmRouter from "./routes/filmRouters.js";
@@ -12,6 +13,7 @@ dotenv.config();
 connectToMongo();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use("/images", express.static("public/storage"));
 
 app.use("/api", filmRouter);
