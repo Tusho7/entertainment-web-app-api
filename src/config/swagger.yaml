@@ -9,6 +9,8 @@ servers:
     description: local server
   - url: https://entertainment-web-u5fj.onrender.com/api
     description: render server
+  - url: https://long-pink-pelican-cap.cyclic.app/api
+    description: cyclic server
 paths:
   /films:
     get:
