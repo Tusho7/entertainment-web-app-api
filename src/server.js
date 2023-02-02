@@ -13,7 +13,11 @@ dotenv.config();
 connectToMongo();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use("/images", express.static("public/storage"));
 app.use("/allimages", express.static("public/AllImages"));
 
