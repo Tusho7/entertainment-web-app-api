@@ -39,4 +39,10 @@ userRouter.post("/user/login", loginUser);
 
 userRouter.get("/users", getUser);
 
+userRouter.get("avatar/:userId", (req, res) => {
+  const { userId } = req.params;
+  const avatarUrl = `/images/${userId}`;
+  res.send({ avatarUrl });
+});
+
 export default userRouter;
