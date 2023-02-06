@@ -23,7 +23,7 @@ export const signUpUser = async (req, res) => {
   const newUser = new User({
     email,
     password: hashedPassword,
-    avatar: file.originalname,
+    avatar: "/images/" + file.originalname,
   });
 
   const saveUser = await newUser.save();
@@ -48,7 +48,11 @@ export const loginUser = async (req, res) => {
     return res.status(401).json({ error: "Wrong email or password" });
   } else {
     const token = jwt.sign(
-      { id: existingUser._id, email: existingUser.email },
+      {
+        id: existingUser._id,
+        email: existingUser.email,
+        avatar: existingUser.avatar,
+      },
       process.env.MONGO_SECRET
     );
 
