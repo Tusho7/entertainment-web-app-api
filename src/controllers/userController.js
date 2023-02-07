@@ -57,7 +57,15 @@ export const loginUser = async (req, res) => {
       process.env.MONGO_SECRET
     );
 
-    return res.status(201).json({ message: "Login successfully", token });
+    return res
+      .status(201)
+      .json({
+        message: "Login successfully",
+        token,
+        email: existingUser.email,
+        id: existingUser._id,
+        avatar: existingUser.avatar,
+      });
   }
 };
 
