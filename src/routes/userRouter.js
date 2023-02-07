@@ -46,6 +46,6 @@ userRouter.get("avatar/:userId", (req, res) => {
   return res.status(200).json({ avatarUrl });
 });
 
-userRouter.get("/verify", verifyToken);
+userRouter.post("/verify", verifyToken);
 
 export default userRouter;
