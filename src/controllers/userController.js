@@ -57,15 +57,13 @@ export const loginUser = async (req, res) => {
       process.env.MONGO_SECRET
     );
 
-    return res
-      .status(201)
-      .json({
-        message: "Login successfully",
-        token,
-        email: existingUser.email,
-        id: existingUser._id,
-        avatar: existingUser.avatar,
-      });
+    return res.status(201).json({
+      message: "Login successfully",
+      token,
+      email: existingUser.email,
+      id: existingUser._id,
+      avatar: existingUser.avatar,
+    });
   }
 };
 
@@ -84,23 +82,15 @@ export const getUser = async (_, res) => {
   res.status(200).json(newUsers);
 };
 
-export const verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers["authorization"];
+export const authenticate = (req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).send("Access denied. No token provided.");
 
-  if (typeof bearerHeader !== "undefined") {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-
-    jwt.verify(bearerToken, process.env.MONGO_SECRET, (err, authData) => {
-      if (err) {
-        return res.status(401).json({ error: "Token not valid" });
-      } else {
-        req.user = authData;
-        next();
-      }
-    });
-  } else {
-    return res.status(401).json({ error: "No token provided" });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (ex) {
+    res.status(400).send("Invalid token.");
   }
 };

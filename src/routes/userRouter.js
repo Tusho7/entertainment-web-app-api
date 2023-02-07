@@ -1,9 +1,9 @@
 import express from "express";
 import {
+  authenticate,
   getUser,
   loginUser,
   signUpUser,
-  verifyToken,
 } from "../controllers/userController.js";
 import multer from "multer";
 
@@ -46,6 +46,9 @@ userRouter.get("avatar/:userId", (req, res) => {
   return res.status(200).json({ avatarUrl });
 });
 
-userRouter.post("/verify", verifyToken);
+userRouter.get("/user", authenticate, async (req, res) => {
+  const User = await User.findById(req.user._id).select("-password");
+  res.send(User);
+});
 
 export default userRouter;
