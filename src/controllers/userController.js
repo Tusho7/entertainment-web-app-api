@@ -77,7 +77,7 @@ export const getUser = async (_, res) => {
 };
 
 export const verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers["authirozation"];
+  const bearerHeader = req.headers["authorization"];
 
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
