@@ -75,3 +75,24 @@ export const getUser = async (_, res) => {
   });
   res.status(200).json(newUsers);
 };
+
+export const verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers["authirozation"];
+
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+
+    jwt.verify(bearerToken, process.env.MONGO_SECRET, (err, authData) => {
+      if (err) {
+        return res.status(401).json({ error: "Token not valid" });
+      } else {
+        req.user = authData;
+        next();
+      }
+    });
+  } else {
+    return res.status(401).json({ error: "No token provided" });
+  }
+};

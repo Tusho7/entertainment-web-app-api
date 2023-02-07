@@ -3,6 +3,7 @@ import {
   getUser,
   loginUser,
   signUpUser,
+  verifyToken,
 } from "../controllers/userController.js";
 import multer from "multer";
 
@@ -44,5 +45,7 @@ userRouter.get("avatar/:userId", (req, res) => {
   const avatarUrl = `/images/${userId}`;
   return res.status(200).json({ avatarUrl });
 });
+
+userRouter.get("/verify", verifyToken);
 
 export default userRouter;
