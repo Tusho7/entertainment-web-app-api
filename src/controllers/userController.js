@@ -56,7 +56,6 @@ export const loginUser = async (req, res) => {
       },
       process.env.MONGO_SECRET
     );
-
     return res.status(201).json({
       message: "Login successfully",
       token,
@@ -83,14 +82,11 @@ export const getUser = async (_, res) => {
 };
 
 export const authenticate = (req, res, next) => {
-  const token = req.header("Authorization");
+  const auth = req.header("Authorization");
+  const [, token] = auth.trim().split(" ");
+  console.log(auth);
   if (!token) return res.status(401).send("Access denied. No token provided.");
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (ex) {
-    res.status(400).send("Invalid token.");
-  }
+  const decoded = jwt.verify(token, process.env.MONGO_SECRET);
+  return res.status(200).json(decoded);
 };
