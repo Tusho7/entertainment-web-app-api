@@ -47,8 +47,8 @@ userRouter.get("avatar/:userId", (req, res) => {
 });
 
 userRouter.get("/user", authenticate, async (req, res) => {
-  const User = await User.findById(req.user._id).select("-password");
-  res.send(User);
+  const foundUser = await User.findById(req.user._id).select("-password");
+  res.send(foundUser);
 });
 
 export default userRouter;
