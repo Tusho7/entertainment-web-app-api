@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 export const signUpUser = async (req, res) => {
   const { email, password } = req.body;
   const { file } = req;
-  console.log(file);
 
   if ((!email, !password)) {
     return res.status(400).json({ error: "Enter all required fields" });
