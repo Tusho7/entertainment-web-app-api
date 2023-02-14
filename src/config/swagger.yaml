@@ -7,7 +7,7 @@ info:
 servers:
   - url: http://localhost:3000/api
     description: local server
-  - url: https://entertainment-web-roum.onrender.com/api
+  - url: https://entertainment-web-2qzi.onrender.com/api
     description: render server
   - url: https://long-pink-pelican-cap.cyclic.app/api
     description: cyclic server
